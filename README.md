@@ -21,8 +21,13 @@ This extension is meticulously crafted to safeguard users from phishing attempts
 
 ## Examples
 
-## Fake example
+[Shodan Query](https://www.shodan.io/search?query=http.favicon.hash%3A-2057558656+http.html%3A%22Sign+in%22+org%3A%22Amazon+Data+Services+NoVa%22)
+```
+http.favicon.hash:-2057558656 http.html:"Sign in"
+```
+
+### Fake example
 ![fake](img/fake-office-ip-domain.png)
 
-## Valid example
+### Valid example
 ![valid](img/original-office.png)

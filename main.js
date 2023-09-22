@@ -1,15 +1,3 @@
-const domain = window.location.hostname;
-const path = window.location.pathname;
-const htmlContent = document.documentElement.outerHTML;
-
-const faviconLink = document.querySelector(
-  'link[rel="shortcut icon"][href="https://aadcdn.msftauth.net/shared/1.0/content/images/"]'
-);
-
-const metaTag = htmlContent.includes(
-  'http-equiv="Refresh" content="0; URL=https://login.microsoftonline.com'
-);
-
 function showPhishingBanner() {
     document.body.innerHTML = `
         <div style="
@@ -49,7 +37,19 @@ function showPhishingBanner() {
     `;
 }
 
-// Lista de domínios de login válidos da Microsoft
+const domain = window.location.hostname;
+const path = window.location.pathname;
+const htmlContent = document.documentElement.outerHTML;
+
+const metaTag = htmlContent.includes(
+  'http-equiv="Refresh" content="0; URL=https://login.microsoftonline.com'
+);
+
+function isIPAddress(str) {
+    const ipPattern = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/; // RegEx para IP IPv4
+    return ipPattern.test(str);
+} 
+
 const validDomains = [
     "login.microsoftonline.com",
     "login.live.com",
@@ -59,23 +59,17 @@ const validDomains = [
     "login-us.microsoftonline.com"
 ];
 
-// Verifica se o conteúdo HTML ou o domínio é um dos domínios válidos da Microsoft
-if (validDomains.some(validDomain => htmlContent.includes(validDomain))) {
+const isValidPathOrMeta = path.includes("common/oauth2") || metaTag;
 
-    // Verifica se o caminho inclui "common/oauth2" ou se a metatag está presente
-    const isValidPathOrMeta = path.includes("common/oauth2") || metaTag;
-
-    if (isValidPathOrMeta) {
-        // Verifica se o domínio termina com "microsoftonline.com"
-        if (domain.endsWith("microsoftonline.com")) {
-            console.log("No phishing - domínio ou metatag válidos");
-        } else {
-            // O domínio não é da Microsoft. Bloqueia e exibe aviso de phishing
-            window.stop();
-            showPhishingBanner();
-        }
-    } else {
-        // Outras verificações podem ser feitas aqui, se necessário
-        console.log("Mais verificações podem ser necessárias");
+if (isIPAddress(domain)) {
+    window.stop();
+    showPhishingBanner();
+} else if (!validDomains.includes(domain)) {
+    window.stop();
+    showPhishingBanner();
+} else if (isValidPathOrMeta) {
+    if (!validDomains.some(validDomain => domain.endsWith(validDomain))) {
+        window.stop();
+        showPhishingBanner();
     }
 }
