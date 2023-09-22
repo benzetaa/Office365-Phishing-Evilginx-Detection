@@ -54,6 +54,8 @@ const validDomains = [
     "login.microsoftonline.com",
     "login.live.com",
     "login.windows.net",
+    "onedrive.live.com",
+    "signup.live.com",
     "login.partner.microsoftonline.cn",
     "login.microsoftonline.de",
     "login-us.microsoftonline.com"
@@ -65,11 +67,10 @@ if (isIPAddress(domain)) {
     window.stop();
     showPhishingBanner();
 } else if (!validDomains.includes(domain)) {
-    window.stop();
-    showPhishingBanner();
-} else if (isValidPathOrMeta) {
-    if (!validDomains.some(validDomain => domain.endsWith(validDomain))) {
-        window.stop();
-        showPhishingBanner();
+    if (isValidPathOrMeta) {
+        if (!validDomains.some(validDomain => domain.endsWith(validDomain))) {
+            window.stop();
+            showPhishingBanner();
+        }
     }
-}
+} 
