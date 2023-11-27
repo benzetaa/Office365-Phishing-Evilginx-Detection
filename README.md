@@ -4,6 +4,8 @@ This extension is meticulously crafted to safeguard users from phishing attempts
 
 ## How it works:
 
+![Alt text](img/poc.gif)
+
 1. The extension checks the domain and content of the current page.
 2. It compares it to a list of valid Microsoft domains.
 3. If it detects a suspicious page that doesn't meet the criteria of a valid Microsoft login, the extension will stop the page from loading.
