@@ -29,7 +29,7 @@ http.favicon.hash:-2057558656 http.html:"Sign in"
 ```
 
 ### Fake example
-![fake](img/fake-office-ip-domain.png)
+![fake](img/fake-office.png)
 
 ### Valid example
 ![valid](img/original-office.png)
